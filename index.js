@@ -3,13 +3,15 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { connectDb } = require('./src/mongo-client.js');
+const { connectDb, createCollection } = require('./src/mongo-client.js');
 const mongoService = require('./src/mongo-service');
 
 const controller = require('./src/controller.js');
 
 (async () => {
-  const { PORT, MONGO_URL, DB_NAME } = process.env;
+  const {
+    PORT, MONGO_URL, DB_NAME, COLLECTION_NAME,
+  } = process.env;
 
   let db;
   try {
@@ -21,6 +23,8 @@ const controller = require('./src/controller.js');
   }
 
   const dbo = db.db(DB_NAME);
+  await createCollection(dbo, COLLECTION_NAME);
+
   //   const dbo = db.db(process.env.DB_NAME);
 
   const app = express();
