@@ -5,9 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios').default;
-const controller = require('../src/controller.js')
-
-
+const controller = require('../src/controller.js');
 
 describe('server', () => {
   const PORT = 3000;

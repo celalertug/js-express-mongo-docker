@@ -11,7 +11,8 @@
     "test": "mocha tests",
     "test-api": "mocha -w tests/api.test.js",
     "test-index": "mocha -w tests/index.test.js",
-    "lint": "eslint"
+    "lint": "eslint",
+    "docker" :"docker-compose build"
   },
   "devDependencies": {
     "eslint": "^7.2.0",
