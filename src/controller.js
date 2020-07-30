@@ -9,6 +9,8 @@ module.exports = (service) => {
 
   router.post('/item', async (req, res) => {
     await service.insert(req.body);
+    await service.find();
+
     res.json(req.body);
   });
   router.get('/item', async (req, res) => {

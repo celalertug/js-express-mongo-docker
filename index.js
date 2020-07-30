@@ -3,8 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { connectDb, createCollection } = require('./src/mongo-client.js');
-const mongoService = require('./src/mongo-service');
+const { connectDb, create } = require('mongo-node-client');
 
 const controller = require('./src/controller.js');
 
@@ -23,7 +22,9 @@ const controller = require('./src/controller.js');
   }
 
   const dbo = db.db(DB_NAME);
-  await createCollection(dbo, COLLECTION_NAME);
+  const mongoService = create(dbo, COLLECTION_NAME);
+  await mongoService.createCollection();
+  // await createCollection(dbo, COLLECTION_NAME);
 
   //   const dbo = db.db(process.env.DB_NAME);
 
@@ -31,7 +32,7 @@ const controller = require('./src/controller.js');
 
   app.use(bodyParser.json());
   app.use(cors());
-  app.use('/', controller(mongoService(dbo, process.env.COLLECTION_NAME)));
+  app.use('/', controller(mongoService));
 
   app.listen(PORT, () => console.log(`listening at http://localhost:${PORT}`));
 })();
